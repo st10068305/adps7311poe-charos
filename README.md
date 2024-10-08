@@ -7,6 +7,8 @@ ST10240068: Mohamed Ziyaa Moosa<br />
 
 Customer International Payments Portal
 
+ Website: [View](https://charos.vps1.lone-wolf.dev)
+
  Overview
 
 This project is a Customer International Payments Portal, developed using Hono for the backend, with a focus on secure headers, CORS, CSRF protection, password security via bcrypt, and session-based authentication using Hono Sessions. The portal allows customers to securely make international payments while ensuring that sensitive data like passwords are never returned to the client.
