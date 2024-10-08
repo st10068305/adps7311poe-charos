@@ -21,7 +21,7 @@ ST10240068:\tMohamed Ziyaa Moosa
 const index = createRouter().openapi(
   createRoute({
     method: "get",
-    path: "/",
+    path: "/api",
     tags: TAGS.INDEX,
     responses: {
       200: {
