@@ -323,7 +323,13 @@
       hsl(var(--secondary))
     );
   background-size: 20px 35px;
-  background-position: 0 0, 0 0, 10px 18px, 10px 18px, 0 0, 10px 18px;
+  background-position:
+    0 0,
+    0 0,
+    10px 18px,
+    10px 18px,
+    0 0,
+    10px 18px;
 }
 
 /* Scrollbar */
