@@ -11,11 +11,13 @@ jobs:
     steps:
       - checkout:
           path: ~/project
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
       - node/install-packages:
           cache-path: ~/project/node_modules
-          override-ci-command: npm install
+          override-ci-command: bun install
       - run:
-          command: npm run build
+          command: bun run build
       - run:
           name: Create the ~/artifacts directory if it doesn't exist
           command: mkdir -p ~/artifacts
@@ -26,15 +28,6 @@ jobs:
       - store_artifacts:
           path: ~/artifacts
           destination: node-build
-  deploy:
-    # This is an example deploy job, not actually used by the workflow
-    docker:
-      - image: cimg/base:stable
-    steps:
-      # Replace this with steps to deploy to users
-      - run:
-          name: deploy
-          command: '#e.g. ./deploy.sh'
 workflows:
   build:
     jobs:
