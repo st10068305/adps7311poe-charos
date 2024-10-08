@@ -18,13 +18,13 @@ const noAuthRoutes: OpenAPIHono<CharosConfig>[] = [index, noAuthentication];
 configureOpenAPI(app);
 configureScalar(app);
 
-noAuthRoutes.forEach((route) => app.route("/", route));
+noAuthRoutes.forEach((route) => app.route("/api", route));
 
 app.use(
   async (context, next) =>
     await authenticationMiddleware(undefined, context, next)
 );
 
-authRoutes.forEach((route) => app.route("/", route));
+authRoutes.forEach((route) => app.route("/api", route));
 
 export default app;
