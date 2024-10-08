@@ -1,9 +1,9 @@
 Developed by:
 
-ST10081301: Kyle Josh Venter
-ST10068305: Connor Richard Davis
-ST1002865:  Umar Bux
-ST10240068: Mohamed Ziyaa Moosa
+ST10081301: Kyle Josh Venter<br />
+ST10068305: Connor Richard Davis<br />
+ST1002865:  Umar Bux<br />
+ST10240068: Mohamed Ziyaa Moosa<br />
 
 Customer International Payments Portal
 
