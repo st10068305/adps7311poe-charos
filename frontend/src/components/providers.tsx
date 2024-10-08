@@ -7,7 +7,7 @@ import { TooltipProvider } from "./ui/tooltip";
 
 export default function Providers({ children }: { children: ReactNode }) {
   return (
-    <ThemeProvider defaultTheme="system" storageKey="charos-theme">
+    <ThemeProvider defaultTheme="light" storageKey="charos-theme">
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           {children}
