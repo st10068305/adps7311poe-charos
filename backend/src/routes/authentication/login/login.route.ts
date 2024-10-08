@@ -6,7 +6,7 @@ import { jsonContent, jsonContentRequired } from "stoker/openapi/helpers";
 import { createMessageObjectSchema } from "stoker/openapi/schemas";
 
 const loginRoute = createRoute({
-  path: "/api/authentication/login",
+  path: "/authentication/login",
   method: "post",
   tags: TAGS.AUTHENTICATION,
   request: {

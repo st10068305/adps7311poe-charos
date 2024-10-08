@@ -1,15 +1,10 @@
 import type { Context, Next } from "hono";
 
 import database from "@/lib/database";
-import { CharosConfig } from "@/lib/types";
 import users from "@/schemas/user";
 import { eq } from "drizzle-orm";
 
-export default async function authenticationMiddleware(
-  requiredRoles: Array<string> | undefined,
-  context: Context<CharosConfig>,
-  next: Next
-) {
+const authenticationMiddleware = async (context: Context, next: Next) => {
   const session = context.get("session");
 
   if (!session) {
@@ -39,16 +34,18 @@ export default async function authenticationMiddleware(
     );
   }
 
-  if (requiredRoles !== undefined) {
-    if (requiredRoles.includes(userFound.role)) {
-      return context.json(
-        {
-          message: "You are not authorized to access this endpoint.",
-        },
-        401
-      );
-    }
-  }
+  // if (requiredRoles !== undefined) {
+  //   if (requiredRoles.includes(userFound.role)) {
+  //     return context.json(
+  //       {
+  //         message: "You are not authorized to access this endpoint.",
+  //       },
+  //       401
+  //     );
+  //   }
+  // }
 
   await next();
-}
+};
+
+export default authenticationMiddleware;

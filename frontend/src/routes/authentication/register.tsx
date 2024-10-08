@@ -11,8 +11,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createFileRoute, Link, useSearch } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  Link,
+  useNavigate,
+  useSearch,
+} from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 export const Route = createFileRoute("/authentication/register")({
@@ -59,6 +65,7 @@ const registerSchema = z.object({
 });
 
 function Register() {
+  const navigate = useNavigate();
   const { to } = useSearch({ from: "/authentication/register" });
 
   const registerForm = useForm<z.infer<typeof registerSchema>>({
@@ -72,7 +79,46 @@ function Register() {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof registerSchema>) => {};
+  const onSubmit = async (values: z.infer<typeof registerSchema>) => {
+    const headers = new Headers();
+
+    headers.set("Content-Type", "application/json");
+    headers.set("Access-Control-Allow-Credentials", "true");
+
+    const registerResponse = await fetch("/api/authentication/register", {
+      method: "POST",
+      body: JSON.stringify(values),
+      headers,
+    });
+
+    const registerStatus = registerResponse.status;
+
+    if (registerStatus === 200) {
+      toast.success("Success", {
+        description: "You have successfully registered.",
+        duration: 2000,
+      });
+
+      return navigate({ to: "/authentication/login", search: { to } });
+    } else {
+      try {
+        const responseText = await registerResponse.text();
+        const responseJSON = JSON.parse(responseText);
+
+        return toast.error(registerResponse.statusText, {
+          description: responseJSON.message,
+          duration: 2000,
+        });
+      } catch (error) {
+        const responseText = await registerResponse.text();
+
+        return toast.error("Unknown Error", {
+          description: responseText,
+          duration: 2000,
+        });
+      }
+    }
+  };
 
   return (
     <div className="flex flex-col items-center justify-center w-full h-full">

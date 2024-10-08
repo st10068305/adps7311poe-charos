@@ -1,5 +1,6 @@
 import HttpStatus from "@/lib/http-status";
 import TAGS from "@/lib/tags";
+import authenticationMiddleware from "@/middleware/authentication-middleware";
 import { selectUsersSchema } from "@/schemas/user";
 import { createRoute } from "@hono/zod-openapi";
 import { jsonContent } from "stoker/openapi/helpers";
@@ -19,6 +20,8 @@ const checkRoute = createRoute({
       "The error message response object"
     ),
   },
+  middleware: async (context, next) =>
+    await authenticationMiddleware(context, next),
 });
 
 export type CheckRoute = typeof checkRoute;

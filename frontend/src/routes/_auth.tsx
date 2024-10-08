@@ -18,6 +18,7 @@ const Auth = () => {
         if (checkStatus !== 200) return reject();
         else resolve({});
       }),
+    retry: false,
   });
 
   if (isFetching)
