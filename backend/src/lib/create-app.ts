@@ -4,6 +4,7 @@ import createRouter from "@/lib/create-router";
 import { pinoLogger } from "@/middleware/pino-logger";
 
 import env from "@/lib/env";
+import { rateLimiter } from "hono-rate-limiter";
 import { CookieStore, sessionMiddleware } from "hono-sessions";
 import { cors } from "hono/cors";
 import { csrf } from "hono/csrf";
@@ -30,6 +31,16 @@ export default function createApp() {
     })
   );
   app.use(csrf());
+
+  const limiter = rateLimiter({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    limit: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
+    standardHeaders: "draft-7", // draft-6: `RateLimit-*` headers; draft-7: combined `RateLimit` header
+    // store: ... , // Redis, MemoryStore, etc. See below.
+    keyGenerator: () => crypto.randomUUID(),
+  });
+
+  app.use(limiter);
 
   const store = new CookieStore();
 

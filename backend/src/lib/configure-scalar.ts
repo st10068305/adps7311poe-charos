@@ -5,10 +5,10 @@ import { CharosConfig } from "@/lib/types";
 
 export default function configureScalar(app: OpenAPIHono<CharosConfig>) {
   app.get(
-    "/api-doc",
+    "/api/api-doc",
     apiReference({
       spec: {
-        url: "/api-spec",
+        url: "/api/api-spec",
       },
       theme: "mars",
       layout: "modern",

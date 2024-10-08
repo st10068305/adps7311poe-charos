@@ -1,10 +1,15 @@
 import type { Context, Next } from "hono";
 
 import database from "@/lib/database";
+import HttpStatus from "@/lib/http-status";
 import users from "@/schemas/user";
 import { eq } from "drizzle-orm";
 
-const authenticationMiddleware = async (context: Context, next: Next) => {
+const authenticationMiddleware = async (
+  requiredRoles: string[] | undefined,
+  context: Context,
+  next: Next
+) => {
   const session = context.get("session");
 
   if (!session) {
@@ -12,7 +17,7 @@ const authenticationMiddleware = async (context: Context, next: Next) => {
       {
         message: "You are not authorized to access this endpoint.",
       },
-      401
+      HttpStatus.UNAUTHORIZED
     );
   }
 
@@ -30,20 +35,20 @@ const authenticationMiddleware = async (context: Context, next: Next) => {
       {
         message: "You are not authorized to access this endpoint.",
       },
-      401
+      HttpStatus.UNAUTHORIZED
     );
   }
 
-  // if (requiredRoles !== undefined) {
-  //   if (requiredRoles.includes(userFound.role)) {
-  //     return context.json(
-  //       {
-  //         message: "You are not authorized to access this endpoint.",
-  //       },
-  //       401
-  //     );
-  //   }
-  // }
+  if (requiredRoles !== undefined) {
+    if (!requiredRoles.includes(userFound.role)) {
+      return context.json(
+        {
+          message: "You are not authorized to access this endpoint.",
+        },
+        HttpStatus.UNAUTHORIZED
+      );
+    }
+  }
 
   await next();
 };

@@ -1,3 +1,4 @@
+import LogoutButton from "@/components/logout-button";
 import Spinner from "@/components/spinners/spinner";
 import { Label } from "@/components/ui/label";
 import { useQuery } from "@tanstack/react-query";
@@ -36,7 +37,19 @@ const Auth = () => {
       <Navigate to="/authentication/login" search={{ to: location.pathname }} />
     );
 
-  return <Outlet />;
+  return (
+    <div className="flex flex-col w-full h-full bg-muted">
+      <div className="flex items-center w-full h-auto p-3 justify-between bg-background border-b">
+        <Label className="pacifico text-2xl text-primary">Charos</Label>
+
+        <div className="flex items-center space-x-3">
+          <LogoutButton />
+        </div>
+      </div>
+
+      <Outlet />
+    </div>
+  );
 };
 
 export const Route = createFileRoute("/_auth")({

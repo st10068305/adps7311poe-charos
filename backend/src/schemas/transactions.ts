@@ -9,7 +9,7 @@ import {
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import providers from "./providers";
 
-const transactions = pgTable("users", {
+const transactions = pgTable("transactions", {
   id: uuid("id").defaultRandom().primaryKey().notNull(),
   fromAccountNumber: varchar("from_account_number", {
     length: 10,
@@ -24,7 +24,7 @@ const transactions = pgTable("users", {
   providerCode: varchar("provider_code", {
     length: 255,
   }).notNull(),
-  amount: decimal("amount").default("0.0").notNull(),
+  amount: decimal("amount").notNull(),
   verified: boolean("verified").default(false).notNull(),
   createdAt: timestamp("created_at", {
     mode: "string",
@@ -45,6 +45,8 @@ const transactions = pgTable("users", {
 export const selectTransactionsSchema = createSelectSchema(transactions);
 export const insertTransactionsSchema = createInsertSchema(transactions).omit({
   id: true,
+  fromAccountNumber: true,
+  verified: true,
   createdAt: true,
   updatedAt: true,
 });

@@ -1,19 +1,23 @@
 import HttpStatus from "@/lib/http-status";
 import TAGS from "@/lib/tags";
 import authenticationMiddleware from "@/middleware/authentication-middleware";
-import { selectUsersSchema } from "@/schemas/user";
-import { createRoute } from "@hono/zod-openapi";
+import { selectTransactionsSchema } from "@/schemas/transactions";
+import { createRoute, z } from "@hono/zod-openapi";
 import { jsonContent } from "stoker/openapi/helpers";
 import { createMessageObjectSchema } from "stoker/openapi/schemas";
 
-const checkRoute = createRoute({
-  path: "/authentication/check",
+const viewTransactionsRoute = createRoute({
+  path: "/transactions",
   method: "get",
-  tags: TAGS.AUTHENTICATION,
+  tags: TAGS.TRANSACTIONS,
   responses: {
     [HttpStatus.OK]: jsonContent(
-      selectUsersSchema,
-      "The user object returned for a successfully logged in user."
+      z.array(selectTransactionsSchema).default([]),
+      "The transactions list."
+    ),
+    [HttpStatus.NOT_FOUND]: jsonContent(
+      createMessageObjectSchema("The user was not found."),
+      "The not-found error message."
     ),
     [HttpStatus.UNAUTHORIZED]: jsonContent(
       createMessageObjectSchema(
@@ -26,6 +30,6 @@ const checkRoute = createRoute({
     await authenticationMiddleware(undefined, context, next),
 });
 
-export type CheckRoute = typeof checkRoute;
+export type ViewTransactionsRoute = typeof viewTransactionsRoute;
 
-export default checkRoute;
+export default viewTransactionsRoute;

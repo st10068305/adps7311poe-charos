@@ -5,7 +5,7 @@ import { CharosConfig } from "@/lib/types";
 import packageJSON from "../../package.json";
 
 export default function configureOpenAPI(app: OpenAPIHono<CharosConfig>) {
-  app.doc("/api-spec", {
+  app.doc("/api/api-spec", {
     openapi: "3.0.0",
     info: {
       version: packageJSON.version,

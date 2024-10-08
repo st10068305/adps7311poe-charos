@@ -21,7 +21,7 @@ const loginRoute = createRoute({
       "The user object returned for a successfully logged in user."
     ),
     [HttpStatus.NOT_FOUND]: jsonContent(
-      createMessageObjectSchema("User not found."),
+      createMessageObjectSchema("The user was not found."),
       "The not-found response message."
     ),
     [HttpStatus.UNAUTHORIZED]: jsonContent(
