@@ -7,9 +7,57 @@ ST10240068: Mohamed Ziyaa Moosa<br />
 
 Customer International Payments Portal
 
+ Website: [View](https://charos.vps1.lone-wolf.dev)
+
  Overview
 
 This project is a Customer International Payments Portal, developed using Hono for the backend, with a focus on secure headers, CORS, CSRF protection, password security via bcrypt, and session-based authentication using Hono Sessions. The portal allows customers to securely make international payments while ensuring that sensitive data like passwords are never returned to the client.
+
+# READ THIS
+
+Install Chocolatey from [here](https://chocolatey.org/install) if you are running in Windows.
+
+Install OpenSSL
+
+##### Linux
+
+```bash
+sudo apt-get install libssl-dev
+```
+
+##### Windows
+
+```bash
+choco install OpenSSL
+```
+
+Follow the prompts for either of the above steps.
+
+Install Bun from [here](https://bun.sh)
+
+##### Run `generate-certificates` In The `backend` Project Directory
+
+```bash
+bun generate-certificates.ts
+```
+
+Follow the prompts
+
+Run The API
+
+```bash
+cd backend/ && bun index.ts
+```
+
+Run The Frontend
+
+```bash
+cd frontend && bun run build && bunx serve dist -p 3000
+```
+
+Access The Frontend
+
+Open your browser for https://localhost:3000
 
  Technologies Used
 
@@ -62,6 +110,6 @@ This project is a Customer International Payments Portal, developed using Hono f
   - DDoS: Rate-limiting is implemented to protect against denial-of-service attacks.
 Video Demonstration
 
-A demonstration of the working portal can be viewed [here](https://youtu.be/example). It covers:
+A demonstration of the working portal can be viewed [here](https://youtu.be/eQgWW_oDRZo). It covers:
 - Secure registration and login with password hashing.
 - Secure payment process with encrypted data transmission over SSL.
