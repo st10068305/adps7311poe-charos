@@ -13,7 +13,6 @@ import { Label } from "@/components/ui/label";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   createFileRoute,
-  Link,
   useNavigate,
   useSearch,
 } from "@tanstack/react-router";
@@ -175,18 +174,6 @@ function Login() {
             <Button type="submit">Continue</Button>
           </form>
         </Form>
-
-        <div className="flex flex-col w-full h-auto space-y-3">
-          <div className="flex items-center space-x-3">
-            <Label>Don't have a registered account?</Label>
-
-            <Link to="/authentication/register" search={{ to }}>
-              <Label className="underline cursor-pointer text-primary">
-                Register
-              </Label>
-            </Link>
-          </div>
-        </div>
       </div>
     </div>
   );

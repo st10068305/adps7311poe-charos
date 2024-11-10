@@ -27,15 +27,19 @@ export default function createApp() {
   app.use(secureHeaders());
   app.use(
     cors({
-      origin: "http://localhost:5173",
+      origin: ["http://localhost:5173", "https://charos.vps1.lone-wolf.dev"],
     })
   );
-  app.use(csrf());
+  app.use(
+    csrf({
+      origin: ["http://localhost:5173", "https://charos.vps1.lone-wolf.dev"],
+    })
+  );
 
   const limiter = rateLimiter({
     windowMs: 15 * 60 * 1000, // 15 minutes
     limit: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
-    standardHeaders: "draft-7", // draft-6: `RateLimit-*` headers; draft-7: combined `RateLimit` header
+    standardHeaders: true, // draft-6: `RateLimit-*` headers; draft-7: combined `RateLimit` header
     // store: ... , // Redis, MemoryStore, etc. See below.
     keyGenerator: () => crypto.randomUUID(),
   });

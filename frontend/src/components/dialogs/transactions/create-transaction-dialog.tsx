@@ -36,10 +36,32 @@ import { toast } from "sonner";
 import { z } from "zod";
 
 const transactionSchema = z.object({
-  amount: z.coerce.number(),
-  currency: z.string().min(3).max(3),
-  provider: z.enum(Providers),
-  providerCode: z.string(),
+  amount: z
+    .string()
+    .regex(
+      /^-?\d+(\.\d+)?$/g,
+      "Please make sure that you provide a valid amount. E.g. 5000.0"
+    ),
+  currency: z
+    .string()
+    .min(3)
+    .max(3)
+    .regex(
+      /^[A-Z]{3}$/g,
+      "Please make sure you provide a valid currency that is 3 letters."
+    ),
+  provider: z
+    .string()
+    .regex(
+      /^(Swift|PayPal|Visa)$/g,
+      "Please make sure you choose a valid provider. Available providers: Swift,PayPal,Visa"
+    ),
+  providerCode: z
+    .string()
+    .regex(
+      /^[A-Z]+$/g,
+      "Please make sure you provide a valid provider code that has only capital letters."
+    ),
   toAccountNumber: z
     .string()
     .min(10, "Please enter an account number with at least 10 digits.")
