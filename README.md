@@ -55,6 +55,10 @@ Run The Frontend
 cd frontend && bun run build && bunx serve dist -p 3000
 ```
 
+Access The Frontend
+
+Open your browser for https://localhost:3000
+
  Technologies Used
 
 - Backend Framework: Hono.dev (Fast, lightweight web framework)
