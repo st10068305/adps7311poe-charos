@@ -4,6 +4,8 @@ jobs:
   build:
     docker:
       - image: cimg/node:23.1.0
+    env:
+          KEY_PASSPHRASE: ${{ secrets.KEY_PASSPHRASE }}
     steps:
       - checkout
       - run:
@@ -14,7 +16,12 @@ jobs:
             echo 'export PATH="$BUN_INSTALL/bin:$PATH"' >> $BASH_ENV
       - run:
           name: Install dependencies and build project
-          command: bun backend/generate-certificates.ts && cd frontend && bun install && bun run build
+          command: |
+            bun backend/generate-certificates.ts
+            
+            cd frontend
+            bun install
+            bun run build
       - sonarcloud/scan
 
 orbs:
