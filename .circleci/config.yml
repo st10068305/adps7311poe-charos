@@ -4,7 +4,10 @@ jobs:
   build:
     docker:
       - image: cimg/node:23.1.0
-    env:
+    permissions:
+      contents: read
+      issues: write
+    environment:
           KEY_PASSPHRASE: ${{ secrets.KEY_PASSPHRASE }}
     steps:
       - checkout
