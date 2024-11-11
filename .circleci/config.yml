@@ -7,8 +7,14 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install Bun
+          command: |
+            curl -fsSL https://bun.sh/install | bash
+            echo 'export BUN_INSTALL="$HOME/.bun"' >> $BASH_ENV
+            echo 'export PATH="$BUN_INSTALL/bin:$PATH"' >> $BASH_ENV
+      - run:
           name: Install dependencies and build project
-          command: npx ts-node backend/generate-certificates.ts && cd frontend && npm install && npm run build
+          command: bun backend/generate-certificates.ts && cd frontend && bun install && bun run build
       - sonarcloud/scan
 
 orbs:
