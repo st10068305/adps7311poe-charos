@@ -1,0 +1,21 @@
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      - image: cimg/node:23.1.0
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies and build project
+          command: npx ts-node backend/generate-certificates.ts && cd frontend && npm install && npm run build
+      - sonarcloud/scan
+
+orbs:
+  sonarcloud: sonarsource/sonarcloud@2.0.0
+
+workflows:
+  main:
+    jobs:
+      - build:
+          context: SonarCloud
